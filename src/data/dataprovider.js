@@ -7,15 +7,14 @@ export class DataProvider {
       const data = Math.round(Math.random() * 100);
 
       this.listeners.forEach(fn => fn(data));
-    }, 2000)
-
+    }, 2000);
   }
 
-  subscribe = (callback) => {
+  subscribe = callback => {
     this.listeners.push(callback);
   };
 
-  unsubscribe = (callback) => {
+  unsubscribe = callback => {
     this.listeners = this.listeners.filter(fn => fn !== callback);
   };
 

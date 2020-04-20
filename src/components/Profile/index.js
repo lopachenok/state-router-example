@@ -1,15 +1,17 @@
-import React, {useContext} from "react";
-import {AuthContext} from "../../context/authContext";
+import React, { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
   const value = useContext(AuthContext);
 
-    return <div>
+  return (
+    <div>
       Profile
-       <div>{value.isLoggedIn ? 'We login here' : 'We out'}</div>
+      <div>{value.isLoggedIn ? "We login here" : "We out"}</div>
       <button onClick={() => value.login()}>login</button>
       <button onClick={() => value.logout()}>logout</button>
-    </div>;
+    </div>
+  );
 };
 
 export default Profile;

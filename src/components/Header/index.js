@@ -1,10 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const Header = ({ changePage }) => {
   return (
     <header>
-      <button onClick={() => changePage("map")}>Map</button>
-      <button onClick={() => changePage("profile")}>Profile</button>
+      <Link to={"map"}>Map</Link>
+      <Link to={"profile"}>Profile</Link>
     </header>
   );
 };
