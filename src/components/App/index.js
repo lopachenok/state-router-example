@@ -1,20 +1,20 @@
 import React from "react";
 import "./App.css";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { Header } from "../Header";
 import Map from "../Map";
 import Profile from "../Profile";
-import { AuthContext } from "../../context/authContext";
-import {DataProvider} from "../../data/dataprovider";
-import {withSubscribe} from "../../hoc/withSubscribe";
+import { withSubscribe } from "../../hoc/withSubscribe";
+import { connect } from "react-redux";
+import Login from "../Login";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      page: "map",
       hasError: false,
-      isLoggedIn: false
+      isLoggedIn: false,
     };
   }
 
@@ -24,31 +24,9 @@ export class App extends React.Component {
     return { hasError: true };
   }
 
-  renderPage = page => {
-    switch (page) {
-      case "map":
-      default:
-        return <Map props={'ghj'} />;
-      case "profile":
-        return <Profile />;
-    }
-  };
-
-  changePage = page => {
-    this.setState({ page });
-  };
-
-  login = () => {
-    this.setState({ isLoggedIn: true });
-  };
-
-  logout = () => {
-    this.setState({ isLoggedIn: false });
-  };
-
   render() {
-    const { page, hasError } = this.state;
-    console.log('App', this.props.data);
+    const { hasError } = this.state;
+    const { isLoggedIn } = this.props;
 
     if (hasError) {
       return (
@@ -59,14 +37,28 @@ export class App extends React.Component {
     }
 
     return (
-      <AuthContext.Provider value={{ isLoggedIn: this.state.isLoggedIn, login: this.login, logout: this.logout }}>
-        <div className="App">
-          <Header className={"header header--red"} changePage={this.changePage} />
-          {this.renderPage(page)}
-        </div>
-      </AuthContext.Provider>
+      <div className="App">
+        <Router>
+          <Header className={"header header--red"} />
+          <Switch>
+            <Route path="/map">{isLoggedIn ? <Map /> : <Redirect to="/login" />}</Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
     );
   }
 }
 
-export default withSubscribe(App);
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.auth.isLoggedIn,
+  };
+};
+
+export default connect(mapStateToProps)(withSubscribe(App));
