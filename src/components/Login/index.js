@@ -1,8 +1,8 @@
 import React from "react";
-import { asyncLoginAC } from "../../store/actions";
-import { connect } from "react-redux";
+import { loginAC } from "../../store/actions";
+import {connect, useSelector} from "react-redux";
 
-const Login = ({ login }) => {
+const Login = ({ login, auth, a }) => {
   return (
     <div>
       <button onClick={() => login()}>Login</button>
@@ -10,9 +10,17 @@ const Login = ({ login }) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+    a: state.a,
+    b: state.b
+  }
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    login: () => dispatch(asyncLoginAC()),
+    login: () => dispatch(loginAC()),
   };
 };
 

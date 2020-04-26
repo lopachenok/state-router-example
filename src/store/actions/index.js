@@ -1,15 +1,18 @@
 export const loginAC = () => {
   return {
-    type: "LOGIN"
+    type: "LOGIN",
   };
 };
 
-export const asyncLoginAC = () => (dispatch, getState) => {
-  setTimeout(
-    () =>
-      dispatch({
-        type: "LOGIN",
-      }),
-    5000,
-  );
+export const getSeriesAC = () => {
+  return {
+    type: "GET_SERIES",
+  };
+};
+
+export const getSeriesSuccessAC = payload => {
+  return {
+    type: "GET_SERIES_SUCCESS",
+    payload,
+  };
 };

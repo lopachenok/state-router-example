@@ -1,12 +1,13 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import { Header } from "../Header";
+import Header from "../Header";
 import Map from "../Map";
 import Profile from "../Profile";
 import { withSubscribe } from "../../hoc/withSubscribe";
 import { connect } from "react-redux";
 import Login from "../Login";
+import {PageWrapper} from "./styles";
 
 export class App extends React.Component {
   constructor(props) {
@@ -38,6 +39,7 @@ export class App extends React.Component {
 
     return (
       <div className="App">
+        <PageWrapper>
         <Router>
           <Header className={"header header--red"} />
           <Switch>
@@ -50,6 +52,7 @@ export class App extends React.Component {
             </Route>
           </Switch>
         </Router>
+        </PageWrapper>
       </div>
     );
   }
